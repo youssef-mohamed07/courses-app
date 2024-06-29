@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
 import CourseCard from '../components/CourseCard';
 import { fetchCoursesStart, fetchCoursesSuccess, fetchCoursesFailure } from '../redux/CourseSlice';
-import sampleData from '../data/sampleData.json'; // Import the local JSON file
 
 function CourseListScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -13,16 +13,13 @@ function CourseListScreen({ navigation }) {
     const fetchCourses = async () => {
       dispatch(fetchCoursesStart());
       try {
-        // Use local JSON data instead of fetching from an API
-        const data = sampleData.courses;
-        console.log('Fetched data:', data); // Add this line
-        dispatch(fetchCoursesSuccess(data));
+        const response = await axios.get('https://mocki.io/v1/53024b09-5964-4158-bb96-407c85d064c7');
+        dispatch(fetchCoursesSuccess(response.data));
       } catch (err) {
-        console.log('Fetch error:', err.message); // Add this line
+        console.error('Error fetching courses:', err);
         dispatch(fetchCoursesFailure(err.message));
       }
     };
-
     fetchCourses();
   }, [dispatch]);
 

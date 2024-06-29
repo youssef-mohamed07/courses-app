@@ -2,7 +2,9 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
+import { NavigationContainer } from '@react-navigation/native';
 
+// Import your screens
 import HomeScreen from '../screens/HomeScreen';
 import CourseListScreen from '../screens/CourseListScreen';
 import CourseDetailScreen from '../screens/CourseDetailsScreen';
@@ -14,35 +16,36 @@ import CameraScreen from '../screens/CameraScreen';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+// CourseStack navigator
 function CourseStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen 
-        name="CourseList" 
-        component={CourseListScreen} 
-        options={{ title: 'Courses' }} 
+      <Stack.Screen
+        name="CourseList"
+        component={CourseListScreen}
+        options={{ title: 'Courses' }}
       />
-      <Stack.Screen 
-        name="CourseDetail" 
-        component={CourseDetailScreen} 
-        options={{ title: 'Course Details' }} 
+      <Stack.Screen
+        name="CourseDetail"
+        component={CourseDetailScreen}
+        options={{ title: 'Course Details' }}
       />
-      <Stack.Screen 
-        name="Lesson" 
-        component={LessonScreen} 
-        options={{ title: 'Lesson' }} 
+      <Stack.Screen
+        name="Lesson"
+        component={LessonScreen}
+        options={{ title: 'Lesson' }}
       />
     </Stack.Navigator>
   );
 }
 
+// Tab navigator
 function TabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-
           if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Courses') {
@@ -50,7 +53,6 @@ function TabNavigator() {
           } else if (route.name === 'Map') {
             iconName = focused ? 'map' : 'map-outline';
           }
-
           return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}
@@ -62,18 +64,19 @@ function TabNavigator() {
   );
 }
 
+// Main app navigator
 function AppNavigator() {
   return (
     <Stack.Navigator mode="modal">
-      <Stack.Screen 
-        name="Main" 
-        component={TabNavigator} 
+      <Stack.Screen
+        name="Main"
+        component={TabNavigator}
         options={{ headerShown: false }}
       />
-      <Stack.Screen 
-        name="Camera" 
-        component={CameraScreen} 
-        options={{ 
+      <Stack.Screen
+        name="Camera"
+        component={CameraScreen}
+        options={{
           headerShown: true,
           title: 'Camera',
         }}
@@ -81,5 +84,8 @@ function AppNavigator() {
     </Stack.Navigator>
   );
 }
+
+// App component with NavigationContainer
+
 
 export default AppNavigator;
