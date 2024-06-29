@@ -1,0 +1,40 @@
+{
+    "courses": [
+      {
+        "id": 1,
+        "title": "Introduction to React Native",
+        "description": "Learn the basics of React Native development",
+        "duration": "4 weeks",
+        "lessons": [
+          {
+            "id": 101,
+            "title": "Setting up your environment",
+            "duration": 30
+          },
+          {
+            "id": 102,
+            "title": "Basic components",
+            "duration": 45
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Advanced JavaScript",
+        "description": "Master advanced JavaScript concepts",
+        "duration": "6 weeks",
+        "lessons": [
+          {
+            "id": 201,
+            "title": "Closures and Scope",
+            "duration": 60
+          },
+          {
+            "id": 202,
+            "title": "Promises and Async/Await",
+            "duration": 90
+          }
+        ]
+      }
+    ]
+  }
