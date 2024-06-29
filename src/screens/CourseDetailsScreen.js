@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCourseDetailStart, fetchCourseDetailSuccess, fetchCourseDetailFailure } from '../redux/CourseSlice'; // Assuming these actions exist in your CourseSlice
+import axios from 'axios';
+import { fetchCourseDetailStart, fetchCourseDetailSuccess, fetchCourseDetailFailure } from '../redux/CourseSlice';
 
 function CourseDetailScreen({ route, navigation }) {
   const { courseId } = route.params;
@@ -12,11 +13,10 @@ function CourseDetailScreen({ route, navigation }) {
     const fetchCourseDetail = async () => {
       dispatch(fetchCourseDetailStart());
       try {
-        // Simulating API call with local data
-        const dataPath = require('../data/sampleData.js');
-        const allCourses = await dataPath.default;
+        const response = await axios.get('https://mocki.io/v1/53024b09-5964-4158-bb96-407c85d064c7');
+        const allCourses = response.data;
         const courseDetail = allCourses.find(course => course.id.toString() === courseId.toString());
-        
+
         if (courseDetail) {
           dispatch(fetchCourseDetailSuccess(courseDetail));
         } else {
@@ -32,8 +32,8 @@ function CourseDetailScreen({ route, navigation }) {
   }, [dispatch, courseId]);
 
   const renderLessonItem = (lesson) => (
-    <TouchableOpacity 
-      key={lesson.id} 
+    <TouchableOpacity
+      key={lesson.id}
       style={styles.lessonItem}
       onPress={() => navigation.navigate('LessonScreen', { lessonId: lesson.id })}
     >
@@ -79,15 +79,10 @@ function CourseDetailScreen({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
+  // Your existing styles
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#f0f0f0',
-  },
-  centerContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   title: {
     fontSize: 24,
@@ -96,33 +91,33 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 16,
-    marginBottom: 16,
+    marginBottom: 8,
   },
   duration: {
     fontSize: 14,
-    color: '#666',
     marginBottom: 16,
   },
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    marginTop: 16,
+    fontSize: 18,
+    fontWeight: 'bold',
     marginBottom: 8,
   },
   lessonItem: {
-    backgroundColor: 'white',
     padding: 16,
-    marginBottom: 8,
-    borderRadius: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
   },
   lessonTitle: {
     fontSize: 16,
-    fontWeight: '500',
   },
   lessonDuration: {
     fontSize: 14,
-    color: '#666',
-    marginTop: 4,
+    color: '#888',
+  },
+  centerContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
