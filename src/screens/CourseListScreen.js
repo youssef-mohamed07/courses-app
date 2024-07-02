@@ -1,22 +1,25 @@
-import React, { useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
-import CourseCard from '../components/CourseCard';
-import { fetchCoursesStart, fetchCoursesSuccess, fetchCoursesFailure } from '../redux/CourseSlice';
+
+import React, { useEffect } from "react";
+import { View, Text, FlatList, StyleSheet, ActivityIndicator } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import CourseCard from "../components/CourseCard";
+import { fetchCoursesStart, fetchCoursesSuccess, fetchCoursesFailure } from "../redux/CourseSlice";
 
 function CourseListScreen({ navigation }) {
   const dispatch = useDispatch();
-  const { list: courses, loading, error } = useSelector(state => state.courses);
+  const { list: courses, loading, error } = useSelector((state) => state.courses);
 
   useEffect(() => {
     const fetchCourses = async () => {
       dispatch(fetchCoursesStart());
       try {
-        const response = await axios.get('https://mocki.io/v1/53024b09-5964-4158-bb96-407c85d064c7');
-        dispatch(fetchCoursesSuccess(response.data));
+        const response = await axios.get(
+          "https://mocki.io/v1/53024b09-5964-4158-bb96-407c85d064c7"
+        );
+        dispatch(fetchCoursesSuccess(response.data.courses));
       } catch (err) {
-        console.error('Error fetching courses:', err);
+        console.error("Error fetching courses:", err);
         dispatch(fetchCoursesFailure(err.message));
       }
     };
@@ -27,7 +30,7 @@ function CourseListScreen({ navigation }) {
     <CourseCard
       title={item.title}
       description={item.description}
-      onPress={() => navigation.navigate('CourseDetail', { courseId: item.id })}
+      onPress={() => navigation.navigate("CourseDetail", { courseId: item.id })}
     />
   );
 
@@ -69,15 +72,15 @@ function CourseListScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: "#f0f0f0",
   },
   listContainer: {
     padding: 16,
   },
   centerContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
